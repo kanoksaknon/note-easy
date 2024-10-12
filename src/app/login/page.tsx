@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import {signIn} from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 const LoginForm: React.FC = () => {
@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
                 onClick={handleGoogleLogin}
                 className="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-violet-900 bg-gray-300 hover:bg-grey-400 focus:ring-4 focus:ring-grey-300"
               >
-                <Image src="/images/google.png" width={30} height={30} alt="" />
+                <Image src="/images/google.png" width={30} height={30} alt="Google logo" />
                 Sign in with Google
               </button>
               <div className="flex items-center mb-3">
@@ -58,7 +58,7 @@ const LoginForm: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="mail@example.com"
-                className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7  bg-gray-200 text-black rounded-2xl"
+                className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-grey-400 mb-7 bg-gray-200 text-black rounded-2xl"
                 required
               />
               <label htmlFor="password" className="mb-2 text-sm text-start text-gray-900">Password*</label>
@@ -68,7 +68,7 @@ const LoginForm: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter a password"
-                className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400  bg-gray-200 text-black rounded-2xl"
+                className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-grey-400 bg-gray-200 text-black rounded-2xl"
                 required
               />
               <div className="flex flex-row justify-between mb-8">
@@ -81,7 +81,12 @@ const LoginForm: React.FC = () => {
                   />
                   <div className="w-5 h-5 bg-white border-2 rounded-sm border-grey-500 peer peer-checked:border-0 peer-checked:bg-purple-blue-500">
                     {keepLoggedIn && (
-                      <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/icons/check.png" alt="tick" />
+                      <Image
+                        src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/icons/check.png"
+                        alt="tick"
+                        width={20}
+                        height={20}
+                      />
                     )}
                   </div>
                   <span className="ml-3 text-sm font-normal text-violet-900">Keep me logged in</span>
