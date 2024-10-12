@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import DeleteBtn from '../Delete';
 import Image from 'next/image';
 
@@ -26,15 +26,15 @@ export default function Home() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   //sort function
-  const sortPosts = (postsArray: Post[]): Post[] => {
+  const sortPosts = useCallback((postsArray: Post[]): Post[] => {
     return [...postsArray].sort((a, b) => {
       const dateA = new Date(a.Date);
       const dateB = new Date(b.Date);
       return sortOrder === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
     });
-  };
+  }, [sortOrder]);
 
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     try {
       const response = await fetch("http://localhost:3000/api/posts", {
         method: "GET",
@@ -50,16 +50,16 @@ export default function Home() {
     } catch (error) {
       console.error("Error fetching data", error);
     }
-  };
+  }, [sortPosts]); // Add sortPosts as a dependency
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]); // Add getPosts as a dependency
 
   useEffect(() => {
     setPosts(prevPosts => sortPosts(prevPosts));
     router.refresh();
-  }, [sortOrder]);
+  }, [sortOrder, sortPosts, router]); // Add sortPosts and router as dependencies
 
   return (
     <main className='container mx-auto my-3 p-3 '>
@@ -82,8 +82,6 @@ export default function Home() {
       </select>
 
       <Link href='/History' className='bg-red-500 p-3 ml-4 text-white rounded inline-block'>History Note</Link>
-
-
 
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-3 gap-5'>
         {posts.length > 0 ? (
@@ -109,6 +107,7 @@ export default function Home() {
     </main>
   );
 }
+
 
 //หน้า edit, delete สามารถเปลี่ยนได้
 //px is padding
