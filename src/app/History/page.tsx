@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface History {
@@ -29,7 +29,7 @@ const HistoryPage = ({ params }: Props) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:3000/api/posts/${id}/history`, {
         method: 'GET',
@@ -47,11 +47,11 @@ const HistoryPage = ({ params }: Props) => {
       console.error('Error fetching history:', error);
       setLoading(false);
     }
-  };
+  }, [id]); 
 
   useEffect(() => {
     fetchHistory();
-  }, [id]);
+  }, [fetchHistory]); 
 
   if (loading) {
     return <div>Loading history...</div>;
@@ -85,3 +85,4 @@ const HistoryPage = ({ params }: Props) => {
 };
 
 export default HistoryPage;
+
