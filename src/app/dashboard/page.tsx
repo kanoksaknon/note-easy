@@ -91,7 +91,7 @@ export default function Home() {
             <div key={post._id} className='shadow-xl my-10 p-10 rounded-xl border-2 border-slate-700'>
               <h1 className='text-2xl'>{post.title}</h1>
               <h2>{post.name}</h2>
-              <p>วันที่ : {post.Date}</p>
+              <p>วันที่ : {new Date(post.Date).toLocaleDateString()}</p>
               <p className='text-lg'>หมวดหมู่ : {post.catagory}</p>
               <p>{post.content}</p>
               <div className='mt-5 space-x-2'>
